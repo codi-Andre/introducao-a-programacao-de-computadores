@@ -5,8 +5,9 @@ int main() {
     // Variáveis
     
     char estado1, estado2, codigo1[3], codigo2[3], cidade1[255], cidade2[255];
-    int populacao1, populacao2, pontos_turisticos1, pontos_turisticos2;
-    float area_em_km_quadrados1, area_em_km_quadrados2, pib1, pib2, densidade_populacional1, densidade_populacional2, pib_per_capita1, pib_per_capita2;
+    int populacao1, populacao2, pontos_turisticos1, pontos_turisticos2, pontuacao1 = 0, pontuacao2 = 0;
+    float area_em_km_quadrados1, area_em_km_quadrados2, pib1, pib2, densidade_populacional1, 
+    densidade_populacional2, pib_per_capita1, pib_per_capita2, super_poder1, super_poder2;
 
     // Cadastro das Cartas:
 
@@ -84,6 +85,24 @@ int main() {
     densidade_populacional2 = (float) populacao2 / area_em_km_quadrados2;
     pib_per_capita1 = (float) (pib1 * 1000000000) / populacao1;
     pib_per_capita2 = (float) (pib2 * 1000000000) / populacao2;
+    super_poder1 = (float) populacao1 + pontos_turisticos1 + area_em_km_quadrados1 + pib1 + pib_per_capita1 - densidade_populacional1;
+    super_poder2 = (float) populacao2 + pontos_turisticos2 + area_em_km_quadrados2 + pib2 + pib_per_capita2 - densidade_populacional2;
+
+    pontuacao1 += populacao1 > populacao2;
+    pontuacao1 += area_em_km_quadrados1 > area_em_km_quadrados2;
+    pontuacao1 += pontos_turisticos1 > pontos_turisticos2;
+    pontuacao1 += pib1 > pib2;
+    pontuacao1 += densidade_populacional1 < densidade_populacional2;
+    pontuacao1 += pib_per_capita1 > pib_per_capita2;
+    pontuacao1 += super_poder1 > super_poder2;
+
+    pontuacao2 += populacao1 < populacao2;
+    pontuacao2 += area_em_km_quadrados1 < area_em_km_quadrados2;
+    pontuacao2 += pontos_turisticos1 < pontos_turisticos2;
+    pontuacao2 += pib1 < pib2;
+    pontuacao2 += densidade_populacional1 > densidade_populacional2;
+    pontuacao2 += pib_per_capita1 < pib_per_capita2;
+    pontuacao2 += super_poder1 < super_poder2;
 
     // Exibição dos Dados das Cartas:
 
@@ -95,6 +114,7 @@ int main() {
     printf("Pontos turísticos: %d\n", pontos_turisticos1);
     printf("Densidade populacional: %.2f hab/km²\n", densidade_populacional1);
     printf("PIB per capita: %.2f reais\n", pib_per_capita1);
+    printf("Super Poder: %.2f\n", super_poder1);
     
     printf("\n\n\n");
     
@@ -106,4 +126,20 @@ int main() {
     printf("Pontos turísticos: %d\n", pontos_turisticos2);
     printf("Densidade populacional: %.2f hab/km²\n", densidade_populacional2);
     printf("PIB per capita: %.2f reais\n", pib_per_capita2);
+    printf("Super Poder: %.2f\n", super_poder2);
+
+    // Duelo
+    
+    printf("Duelo das cartas\n");
+    printf("Cidade %s vs cidade %s\n\n", cidade1, cidade2);
+
+    printf("População:             %d vs %d\n", populacao1 > populacao2, populacao1 < populacao2);
+    printf("Área:                  %d vs %d\n", area_em_km_quadrados1 > area_em_km_quadrados2, area_em_km_quadrados1 < area_em_km_quadrados2);
+    printf("Pontos turísticos:     %d vs %d\n", pontos_turisticos1 > pontos_turisticos2, pontos_turisticos1 < pontos_turisticos2);
+    printf("PIB:                   %d vs %d\n", pib1 > pib2, pib1 < pib2);
+    printf("Densidade demográfica: %d vs %d\n", densidade_populacional1 < densidade_populacional2, densidade_populacional1 > densidade_populacional2);
+    printf("PIB per Capita:        %d vs %d\n", pib_per_capita1 > pib_per_capita2, pib_per_capita1 < pib_per_capita2);
+    printf("Super poder:           %d vs %d\n\n", super_poder1 > super_poder2, super_poder1 < super_poder2);
+
+    printf("Pontuação: Cidade %s com %d e cidade %s com %d\n\n\n", cidade1, pontuacao1, cidade2, pontuacao2);
 }
